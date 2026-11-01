@@ -1,7 +1,12 @@
-import React from "react";
+import Landing from "@/components/public/Landing/Landing";
 
-const Landing = () => {
-  return <div>Landing</div>;
+export const metadata = {
+  title: "Welcome to KnowMigo",
+  description: "Know more about us and starting peering today.",
 };
 
-export default Landing;
+const LandingPage = () => {
+  return <Landing />;
+};
+
+export default LandingPage;

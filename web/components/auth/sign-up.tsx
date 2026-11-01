@@ -21,7 +21,7 @@ const SignUp = () => {
   return (
     <Box className="min-h-screen flex p-2 md:p-10 items-center justify-center">
       <Card className="p-12 gap-20 flex flex-col w-full md:flex-row">
-        <Box className="md:w-[50%] w-full flex flex-col gap-4">
+        <Box className="md:w-[40%] w-full flex flex-col gap-4">
           <Box>
             <h1 className="font-bold text-3xl md:text-4xl">
               Create your KnowMigo account
@@ -97,8 +97,8 @@ const SignUp = () => {
             </Link>
           </p>
         </Box>
-        <Box className="w-[50%] hidden md:flex flex-col justify-center items-center">
-          <Box>
+        <Box className="w-[60%] hidden md:flex flex-col justify-center items-center">
+          {/* <Box>
             <h1 className="font-bold text-3xl md:text-4xl">
               Learn together. Grow together.
             </h1>
@@ -106,7 +106,7 @@ const SignUp = () => {
               Join a community where everyone has something to teach and
               something to learn.
             </p>
-          </Box>
+          </Box> */}
           <Image src={studentsTwo} alt="Student swaping skill" />
         </Box>
       </Card>
