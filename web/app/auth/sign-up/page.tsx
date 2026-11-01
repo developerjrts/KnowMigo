@@ -1,7 +1,12 @@
-import React from "react";
+import SignUp from "@/components/auth/sign-up";
 
-const SignUp = () => {
-  return <div>SignUp</div>;
+export const metadata = {
+  title: "Sign Up | KnowMigo",
+  description: "Start learning with verified strangers, and grow together.",
 };
 
-export default SignUp;
+const SignUpPage = () => {
+  return <SignUp />;
+};
+
+export default SignUpPage;
