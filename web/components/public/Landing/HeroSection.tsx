@@ -3,12 +3,13 @@ import { Box, Button } from "@mui/material";
 import Image from "next/image";
 import Exchange from "@/assets/images/Exchange.png";
 import { useRouter } from "next/navigation";
+import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 
 const HeroSection = () => {
   const router = useRouter();
 
   return (
-    <Box className="flex md:flex-row bg-white flex-col">
+    <Box className="flex md:flex-row bg-white text-[#222] flex-col">
       <Box className="md:w-[50%] w-full p-10 flex flex-col gap-4">
         <p className="py-2 px-4 bg-blue-500/10 text-blue-500 rounded-lg w-fit">
           Your Skills. Someone Else's Superpower
@@ -43,6 +44,10 @@ const HeroSection = () => {
             Explore How it Works
           </Button>
         </Box>
+        <p className="flex justiy-center gap-2 text-[#444] font-bold">
+          <TaskAltOutlinedIcon className="text-blue-500" />
+          Build for students • Powered by collaboration
+        </p>
       </Box>
       <Box className="md:w-[50%] w-full">
         <Image src={Exchange} alt="Exchange" />
