@@ -1,5 +1,5 @@
 import React from "react";
-import { detailCards } from "@/constants/card.constant.ts";
+import { detailCards } from "@/constants/card.constant";
 import { Box, Card } from "@mui/material";
 
 const Cards = () => {

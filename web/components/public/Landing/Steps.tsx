@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Card } from "@mui/material";
-import { stepsCard } from "@/constants/card.constant.ts";
+import { stepsCard } from "@/constants/card.constant";
 
 const Steps = () => {
   return (
