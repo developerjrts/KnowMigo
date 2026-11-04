@@ -2,6 +2,7 @@ import { Box } from "@mui/material";
 import Cards from "./Cards";
 import HeroSection from "./HeroSection";
 import Steps from "./Steps";
+import Advantages from "./Advantages";
 
 const Landing = () => {
   return (
@@ -9,6 +10,7 @@ const Landing = () => {
       <HeroSection />
       <Cards />
       <Steps />
+      <Advantages />
     </Box>
   );
 };

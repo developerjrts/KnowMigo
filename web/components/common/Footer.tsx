@@ -16,28 +16,30 @@ const Footer = () => {
           </p>
         </Box>
 
-        <Box className="flex flex-col items-center justify-center gap-4">
-          <h1 className="text-xl font-bold text-[#002550]">Account</h1>
-          <Box className="flex flex-col gap-1 text-center">
-            <a
-              className="text-[#222] text-lg no-underline"
-              href="/auth/sign-in"
-            >
-              Sign In
-            </a>
-            <a href="/auth/sign-up">Create Account</a>
+        <Box className="flex w-full md:w-1/2 flex-row gap-10 justify-between md:justify-evenly">
+          <Box className="flex flex-col md:items-center justify-center gap-4">
+            <h1 className="text-xl font-bold text-[#002550]">Account</h1>
+            <Box className="flex flex-col gap-1 md:text-center">
+              <a
+                className="text-[#222] text-lg no-underline"
+                href="/auth/sign-in"
+              >
+                Sign In
+              </a>
+              <a href="/auth/sign-up">Create Account</a>
+            </Box>
           </Box>
-        </Box>
 
-        <Box className="flex flex-col items-center justify-center gap-4">
-          <h1 className="text-xl font-bold text-[#002550]">Legal & Social</h1>
-          <Box className="flex flex-col gap-1 text-center">
-            <a className="text-[#222] text-lg no-underline" href="/privacy">
-              Sign In
-            </a>
-            <a className="text-[#222] text-lg no-underline" href="/terms">
-              Create Account
-            </a>
+          <Box className="flex flex-col md:items-center justify-center gap-4">
+            <h1 className="text-xl font-bold text-[#002550]">Legal & Social</h1>
+            <Box className="flex flex-col gap-1 md:text-center">
+              <a className="text-[#222] text-lg no-underline" href="/privacy">
+                Privacy Policy
+              </a>
+              <a className="text-[#222] text-lg no-underline" href="/terms">
+                Terms of Service
+              </a>
+            </Box>
           </Box>
         </Box>
       </Box>

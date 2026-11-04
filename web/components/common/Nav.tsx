@@ -1,40 +1,34 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { AppBar, Toolbar, Button, Box } from "@mui/material";
 import logoWithText from "@/assets/images/logo-with-text.png";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 
 const Nav = () => {
   const router = useRouter();
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const links = [
-    {
-      title: "Home",
-      path: "/",
-    },
-    {
-      title: "About",
-      path: "/about",
-    },
-    // {
-    //     title: "About",
-    //     path: "/about"
-    // },
+    { title: "Home", path: "/" },
+    { title: "About", path: "/about" },
+    { title: "How it works", path: "/working" },
   ];
 
+  if (!mounted) {
+    return null;
+  }
+
   return (
-    <AppBar
-      position="static"
-      sx={{
-        boxShadow: "none",
-      }}
-    >
+    <AppBar position="static" sx={{ boxShadow: "none" }}>
       <Toolbar
-        sx={{
-          backgroundColor: "#FFF",
-        }}
+        sx={{ backgroundColor: "#FFF" }}
         className="flex items-center justify-between"
       >
         <Image src={logoWithText} alt="Logo" className="w-[100px]" />
@@ -44,22 +38,24 @@ const Nav = () => {
             const isActive = pathname === link.path;
 
             return (
-              <a
+              <Link
                 key={i}
                 href={link.path}
-                className={`${isActive ? "bg-blue-500/10 text-blue-500 font-semibold py-2 px-4 rounded-md" : "hover:bg-blue-500/10 py-2 px-4 rounded-md transition duration-300"} text-blue-500`}
+                className={`${
+                  isActive
+                    ? "bg-blue-500/10 font-semibold"
+                    : "hover:bg-blue-500/10 transition duration-300"
+                } text-blue-500 py-2 px-4 rounded-md`}
               >
                 {link.title}
-              </a>
+              </Link>
             );
           })}
         </Box>
 
         <Button
           variant="contained"
-          sx={{
-            textTransform: "none",
-          }}
+          sx={{ textTransform: "none" }}
           onClick={() => router.push("/auth/sign-up")}
         >
           Get Started
