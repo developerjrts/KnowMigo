@@ -9,13 +9,18 @@ import {
   FormControlLabel,
   Link,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import Image from "next/image";
 import students from "@/assets/images/students.png";
+import signIn from "@/services/auth/signIn.service";
 
 const SignIn = () => {
-  const [email, setEmail] = useState<string>();
-  const [password, setPassword] = useState<string>();
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+  });
 
   return (
     <Box className="min-h-screen flex p-2 md:p-10 items-center justify-center">
@@ -29,38 +34,47 @@ const SignIn = () => {
             </p>
           </Box>
           <TextField
-            label="Email"
-            type="email"
+            label="Username"
+            type="text"
             required={true}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="name@university.edu"
+            onChange={(e) => setUser({ ...user, username: e.target.value })}
+            placeholder="Enter your username"
           />
           <TextField
             label="Password"
             type="password"
             required={true}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
             placeholder="Enter your student password"
           />
-          <Link
+          {/* <Link
             className="text-right cursor-pointer"
             sx={{
               fontWeight: 700,
             }}
           >
             Forgot password?
-          </Link>
+          </Link> */}
           <FormControlLabel
             control={<Checkbox defaultChecked />}
             label="Stay signed in on this device"
           />
           <Button
             variant="contained"
+            disabled={loading}
             sx={{ textTransform: "none", fontSize: 20 }}
+            onClick={() => signIn({ user, setLoading })}
           >
-            Sign In to learning space
+            {loading ? (
+              <Box className="flex items-center justify-center gap-2">
+                <CircularProgress size={24} />
+                <span>Signing in...</span>
+              </Box>
+            ) : (
+              "Sign In to learning space"
+            )}
           </Button>
-          <p className="text-[#43474F] text-center">OR AUTHENTICATE WITH</p>
+          <p className="text-[#43474F] text-center">OR</p>
           <p className="text-[#43474F] text-center">
             New to peer exchange?{" "}
             <Link

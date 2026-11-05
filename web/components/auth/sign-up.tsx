@@ -1,22 +1,27 @@
 "use client";
-import React, { useState } from "react";
+import studentsTwo from "@/assets/images/students-2.png";
+import createAccount from "@/services/auth/createAccount.service";
 import {
   Box,
-  Card,
-  Typography,
-  TextField,
-  Checkbox,
-  FormControlLabel,
-  Link,
   Button,
+  Card,
+  Checkbox,
+  CircularProgress,
+  Link,
+  TextField,
+  Typography,
 } from "@mui/material";
 import Image from "next/image";
-import studentsTwo from "@/assets/images/students-2.png";
+import { useState } from "react";
 
 const SignUp = () => {
-  const [name, setName] = useState<string>();
-  const [email, setEmail] = useState<string>();
-  const [password, setPassword] = useState<string>();
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState({
+    name: "",
+    username: "",
+    email: "",
+    password: "",
+  });
 
   return (
     <Box className="min-h-screen flex p-2 md:p-10 items-center justify-center">
@@ -31,26 +36,39 @@ const SignUp = () => {
               something to learn.
             </p>
           </Box>
-          <TextField
-            label="Name"
-            type="text"
-            required={true}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter your full name"
-          />
+          <Box className="flex gap-4 md:flex-row flex-col">
+            <TextField
+              label="Name"
+              type="text"
+              value={user.name}
+              required={true}
+              onChange={(e) => setUser({ ...user, name: e.target.value })}
+              placeholder="Enter your full name"
+            />
+            <TextField
+              label="Username"
+              type="username"
+              value={user.username}
+              required={true}
+              onChange={(e) => setUser({ ...user, username: e.target.value })}
+              placeholder="Create your username"
+            />
+          </Box>
           <TextField
             label="Email"
+            value={user.email}
             type="email"
             required={true}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(e) => setUser({ ...user, email: e.target.value })}
             placeholder="name@university.edu"
           />
           <TextField
             label="Password"
             type="password"
             required={true}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Enter your student password"
+            value={user.password}
+            onChange={(e) => setUser({ ...user, password: e.target.value })}
+            placeholder="Create a strong password"
           />
           <Box className="flex items-center">
             <Checkbox defaultChecked />
@@ -79,11 +97,20 @@ const SignUp = () => {
           </Box>
           <Button
             variant="contained"
+            disabled={loading}
             sx={{ textTransform: "none", fontSize: 20 }}
+            onClick={() => createAccount({ user, setLoading })}
           >
-            Create Account
+            {loading ? (
+              <Box className="flex items-center justify-center gap-2">
+                <CircularProgress size={24} />
+                <span>Creating Account...</span>
+              </Box>
+            ) : (
+              "Create Account"
+            )}
           </Button>
-          <p className="text-[#43474F] text-center">OR REGISTER WITH</p>
+          <p className="text-[#43474F] text-center">OR</p>
           <p className="text-[#43474F] text-center">
             Already have an account?{" "}
             <Link
@@ -98,15 +125,6 @@ const SignUp = () => {
           </p>
         </Box>
         <Box className="w-[60%] hidden md:flex flex-col justify-center items-center">
-          {/* <Box>
-            <h1 className="font-bold text-3xl md:text-4xl">
-              Learn together. Grow together.
-            </h1>
-            <p className="text-[#43474F] text-md md:text-lg">
-              Join a community where everyone has something to teach and
-              something to learn.
-            </p>
-          </Box> */}
           <Image src={studentsTwo} alt="Student swaping skill" />
         </Box>
       </Card>
