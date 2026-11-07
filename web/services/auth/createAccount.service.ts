@@ -15,6 +15,19 @@ interface Parameters {
 
 const createAccount = async ({ user, setOpen, setLoading }: Parameters) => {
   setLoading(true);
+
+  if (!user.name || !user.username || !user.email || !user.password) {
+    toast.error("Please fill in all required fields.");
+    setLoading(false);
+    return;
+  }
+
+  if (user.password.length < 8) {
+    toast.error("Password must be at least 8 characters long.");
+    setLoading(false);
+    return;
+  }
+
   try {
     const { data } = await api.post("/auth/register", user);
 
