@@ -9,6 +9,8 @@ import GroupAddRoundedIcon from "@mui/icons-material/GroupAddRounded";
 import AcUnitRoundedIcon from "@mui/icons-material/AcUnitRounded";
 import PsychologyAltIcon from "@mui/icons-material/PsychologyAlt";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
+import LockIcon from "@mui/icons-material/Lock";
+import TerminalIcon from "@mui/icons-material/Terminal";
 
 export const detailCards = [
   {
@@ -82,5 +84,32 @@ export const advantagesCard = [
     caption:
       "Form authentic professional relationships. Many KnowMigo exchanges turn into hackathon teams, open-source contributors, and co-founders building meaningful ventures.",
     icon: RocketLaunchIcon,
+  },
+];
+
+export const missionCard = [
+  {
+    title: "Accessible Learning",
+    caption:
+      "Eliminating tuition and monetary hurdles so any curious student can learn directly from a peer who mastered it.",
+    icon: LockIcon,
+  },
+  {
+    title: "Peer Reciprocity",
+    caption:
+      "Encouraging students to both teach and learn, reinforcing their own mastery through the timeless Feynman technique.",
+    icon: SwapHorizIcon,
+  },
+  {
+    title: "Beyond Campus Walls",
+    caption:
+      "Connecting ambitious learners across tier-1 colleges and regional institutions into one democratized network.",
+    icon: AcUnitRoundedIcon,
+  },
+  {
+    title: "Practical Growth",
+    caption:
+      "Focusing on hands-on project skills, live coding, design critiques, and career readiness rather than passive video lectures.",
+    icon: TerminalIcon,
   },
 ];
