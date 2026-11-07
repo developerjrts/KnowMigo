@@ -9,16 +9,21 @@ interface Parameters {
     email: string;
     password: string;
   };
+  setOpen: (value: boolean) => void;
   setLoading: (value: boolean) => void;
 }
 
-const createAccount = async ({ user, setLoading }: Parameters) => {
+const createAccount = async ({ user, setOpen, setLoading }: Parameters) => {
   setLoading(true);
   try {
     const { data } = await api.post("/auth/register", user);
 
     if (data.status) {
-      toast.success("Account created successfully!");
+      toast.success(
+        data.message ||
+          "Account created successfully. Please check your email for verification.",
+      );
+      setOpen(true);
     } else {
       toast.error(
         data.message || "An error occurred while creating the account.",

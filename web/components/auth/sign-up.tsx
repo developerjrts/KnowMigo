@@ -13,9 +13,11 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
+import SignUpComplete from "../dialog/SignUpComplete";
 
 const SignUp = () => {
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   const [user, setUser] = useState({
     name: "",
     username: "",
@@ -24,7 +26,7 @@ const SignUp = () => {
   });
 
   return (
-    <Box className="min-h-screen flex p-2 md:p-10 items-center justify-center">
+    <Box className="min-h-screen flex p-4 items-center justify-center">
       <Card className="p-12 gap-20 flex flex-col w-full md:flex-row">
         <Box className="md:w-[40%] w-full flex flex-col gap-4">
           <Box>
@@ -99,7 +101,7 @@ const SignUp = () => {
             variant="contained"
             disabled={loading}
             sx={{ textTransform: "none", fontSize: 20 }}
-            onClick={() => createAccount({ user, setLoading })}
+            onClick={() => createAccount({ user, setOpen, setLoading })}
           >
             {loading ? (
               <Box className="flex items-center justify-center gap-2">
@@ -128,6 +130,11 @@ const SignUp = () => {
           <Image src={studentsTwo} alt="Student swaping skill" />
         </Box>
       </Card>
+      <SignUpComplete
+        open={open}
+        email={user.email}
+        onClose={() => setOpen(false)}
+      />
     </Box>
   );
 };

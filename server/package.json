@@ -12,6 +12,7 @@
     "build": "tsc"
   },
   "dependencies": {
+    "@emailjs/nodejs": "^5.0.2",
     "bcryptjs": "^3.0.3",
     "cors": "^2.8.6",
     "cost": "^1.2.3",

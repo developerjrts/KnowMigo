@@ -2,6 +2,8 @@ import type { Request, Response } from "express";
 import userModel from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import createSessionCode from "../configs/sessioncode.js";
+import createVerificationToken from "../configs/verification.code.js";
+import sendVerificationEmail from "../utils/verification.mail.js";
 
 export const signIn = async (req: Request, res: Response) => {
   try {
@@ -66,25 +68,34 @@ export const signUp = async (req: Request, res: Response) => {
       });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12);
-
     const firstName = name.split(" ")[0];
     const lastName = name.split(" ")[1];
     const avatar = `https://ui-avatars.com/api/?name=${firstName}+${lastName}&background=random&size=128`;
 
-    const newUser = new userModel({
+    const newUser = await userModel.create({
       name,
       username,
       email,
       avatar,
-      password: hashedPassword,
+      password: await bcrypt.hash(password, 12),
     });
 
-    await newUser.save();
+    const verificationToken = createVerificationToken(newUser._id.toString());
+
+    await newUser.updateOne({
+      $set: {
+        verificationToken,
+        tokenExpires: new Date(Date.now() + 5 * 60 * 60 * 1000),
+      },
+    });
+
+    const verification_link = `${process.env.CLIENT_URL}/verify?verification_session${verificationToken}`;
+
+    await sendVerificationEmail(email, firstName, verification_link);
 
     res.status(201).json({
       status: true,
-      message: "User created successfully.",
+      message: "Verification session sent to your email.",
     });
   } catch (error) {
     console.log(error);
