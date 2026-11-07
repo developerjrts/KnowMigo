@@ -5,5 +5,6 @@ const authRouter = createRouter();
 
 authRouter.route("/register").post(authController.signUp);
 authRouter.route("/login").post(authController.signIn);
+authRouter.route("/verify").post(authController.verifyEmail);
 
 export default authRouter;

@@ -4,6 +4,7 @@ import bcrypt from "bcryptjs";
 import createSessionCode from "../configs/sessioncode.js";
 import createVerificationToken from "../configs/verification.code.js";
 import sendVerificationEmail from "../utils/verification.mail.js";
+import jwt from "jsonwebtoken";
 
 export const signIn = async (req: Request, res: Response) => {
   try {
@@ -85,17 +86,80 @@ export const signUp = async (req: Request, res: Response) => {
     await newUser.updateOne({
       $set: {
         verificationToken,
-        tokenExpires: new Date(Date.now() + 5 * 60 * 60 * 1000),
+        tokenExpires: new Date(Date.now() + 15 * 60 * 1000),
       },
     });
 
-    const verification_link = `${process.env.CLIENT_URL}/verify?verification_session${verificationToken}`;
+    const verification_link = `${process.env.CLIENT_URL}/auth/verify?verification_session=${verificationToken}`;
 
     await sendVerificationEmail(email, firstName, verification_link);
 
     res.status(201).json({
       status: true,
       message: "Verification session sent to your email.",
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(501).json({
+      status: false,
+      message: "Something went wrong.",
+    });
+  }
+};
+
+export const verifyEmail = async (req: Request, res: Response) => {
+  try {
+    const { verification_session } = req.query;
+
+    const decode = jwt.verify(
+      verification_session as string,
+      process.env.JWT_SECRET as string,
+    ) as { id: string };
+    console.log(decode);
+
+    if (!decode) {
+      return res.status(400).json({
+        message: "Invalid verification session.",
+        status: false,
+      });
+    }
+
+    const user = await userModel
+      .findById(decode.id)
+      .select("+verificationToken +tokenExpires");
+
+    if (!user) {
+      return res.status(404).json({
+        message: "Invalid verification session.",
+        status: false,
+      });
+    }
+
+    if (user.isVerified) {
+      return res.status(400).json({
+        message: "User already verified.",
+        status: false,
+      });
+    }
+
+    const date = new Date();
+
+    if (!user.tokenExpires || user.tokenExpires < date) {
+      return res.status(400).json({
+        message: "Verification session expired.",
+        status: false,
+      });
+    }
+
+    await userModel.findByIdAndUpdate(decode.id, {
+      isVerified: true,
+      tokenExpires: null,
+      verificationToken: null,
+    });
+
+    res.status(201).json({
+      message: "Account verified",
+      status: true,
     });
   } catch (error) {
     console.log(error);
