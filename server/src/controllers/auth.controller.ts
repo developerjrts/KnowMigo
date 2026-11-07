@@ -35,6 +35,7 @@ export const signIn = async (req: Request, res: Response) => {
     const session_code = createSessionCode(user._id.toString());
 
     res.cookie("session_code", session_code, {
+      maxAge: 30 * 24 * 60 * 60 * 1000,
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
